@@ -1,0 +1,37 @@
+version: '3.5'
+services:
+  apache:
+    container_name: apache2
+    image: epinux/apache2-php72
+    ports:
+      - "80:80"
+    volumes:
+      - ./volumes/apache2/data:/var/www/html/
+      - ./volumes/apache2/conf/httpd.conf:/etc/apache2/apache2.conf
+    restart: unless-stopped
+
+  hyrax:
+    container_name: hyrax
+    image: opendap/hyrax:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./volumes/apache2/data:/usr/share/hyrax
+
+  pydap:
+    container_name: pydap
+    image: epinux/metsis-pydap
+    ports:
+      - "9090:80"
+    volumes:
+      - ./volumes/apache2/data:/var/www/sites/pydap/server/data
+    restart: unless-stopped
+
+  jupyter:
+    container_name: jupyter
+    image: epinux/pydap-client
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./volumes/jupyter/notebooks:/home/jovyan/work
+    restart: unless-stopped

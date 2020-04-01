@@ -6,12 +6,12 @@ FROM php:7.2-apache
 
 USER root
 
-RUN echo "deb-src http://deb.debian.org/debian buster main" >> /etc/apt/sources.list
-RUN echo "deb-src http://security.debian.org/debian-security buster/updates main" >> /etc/apt/sources.list
-RUN echo "deb-src http://deb.debian.org/debian buster-updates main" >> /etc/apt/sources.list
+# RUN echo "deb-src http://deb.debian.org/debian buster main" >> /etc/apt/sources.list
+# RUN echo "deb-src http://security.debian.org/debian-security buster/updates main" >> /etc/apt/sources.list
+# RUN echo "deb-src http://deb.debian.org/debian buster-updates main" >> /etc/apt/sources.list
 
 
-RUN apt-get update
+RUN apt-get update && apt-get -y dist-upgrade
 
 RUN apt-get update && apt-get install -y wget git \
                        nano \
@@ -20,11 +20,6 @@ RUN apt-get update && apt-get install -y wget git \
                        libmapserver-dev \
                        libmapserver2 \
                        python3-pip \
-                       -o APT::Install-Suggests=0 \
-                       -o APT::Install-Recommends=0
-
-                       apt-get install \
-                       --allow-unauthenticated \
                        protobuf-c-compiler \
                        libprotobuf-c-dev \
                        bison \
@@ -57,9 +52,15 @@ RUN apt-get update && apt-get install -y wget git \
                        libharfbuzz-dev \
                        gdal-bin \
                        ccache \
-                       curl
+                       curl \
+                       libperl-dev \
+                       swig \
+                       sqlite3 \
+                       -o APT::Install-Suggests=0 \
+                       -o APT::Install-Recommends=0 \
+                       --allow-unauthenticated
 
-                       apt-get install --allow-unauthenticated libmono-system-drawing4.0-cil mono-mcs libperl-dev swig sqlite3
+                       # apt-get install --allow-unauthenticated libmono-system-drawing4.0-cil mono-mcs 
 
 
 

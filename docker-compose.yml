@@ -32,7 +32,7 @@ services:
 
   jupyter:
     container_name: jupyter
-    image: epinux/pydap-client
+    image: epinux/jupyter-base
     build:
       context: ./jupyter/
       dockerfile: Dockerfile
